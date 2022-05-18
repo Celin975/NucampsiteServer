@@ -1,6 +1,4 @@
 const express = require('express');
-const Campsite = require('../models/campsite');
-
 const campsiteRouter = express.Router();
 
 campsiteRouter.route('/')
