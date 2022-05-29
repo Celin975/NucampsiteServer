@@ -1,60 +1,19 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-require('mongoose-currency').loadType(mongoose);
-const Currency = mongoose.Types.Currency;
-
-const commentSchema = new Schema({
-    rating: {
-        type: Number,
-        min: 1,
-        max: 5,
-        required: true
-    },
-    text: {
-        type: String,
-        required: true
-    },
-    author: {
+const favoriteSchema = new Schema({
+    user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User'
-    }
+    },
+    campsites: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Campsite'
+    }]
 }, {
     timestamps: true
 });
 
-const campsiteSchema = new Schema({
-    name: {
-        type: String,
-        required: true,
-        unique: true
-    },
-    description: {
-        type: String,
-        required: true
-    },
-    image: {
-        type: String,
-        required: true
-    },
-    elevation: {
-        type: Number,
-        required: true
-    },
-    cost: {
-        type: Currency,
-        required: true,
-        min: 0
-    },
-    featured: {
-        type: Boolean,
-        default: false
-    },
-    comments: [commentSchema]
-}, {
-    timestamps: true
-});
+const Favorite = mongoose.model('Favorite', favoriteSchema);
 
-const Campsite = mongoose.model('Campsite', campsiteSchema);
-
-module.exports = Campsite;
+module.exports = Favorite;
